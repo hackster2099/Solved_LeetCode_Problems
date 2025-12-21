@@ -1,53 +1,53 @@
 class Solution {
 
+    // declaring and initializing the hashmap and an array to contain the final result.
+    public static HashMap<Integer, Integer> hashMap;
+    public static int[] result = new int[2]; 
+
     public int[] twoSum(int[] nums, int target) {
-
-        int staticIndex = 0; 
-        int dynamicIndex = 0;       
-        // two temp variables
-
-        int[] returnArr = new int[2]; 
-
-        for(int i=0; i < nums.length; i++){
         
-            if(nums[staticIndex] >  target){
+        // two variables for holding the value based on the for loop index, as well as operation value
+        int x;
+        int valueInSet;
+    
+        hashMap = loader(nums);
 
-                staticIndex+=1;
-                i = 0;
+        for(int i=0; i<nums.length; ++i) {
 
-            }
 
-            if((i == staticIndex)){
-                i++;
+            x = nums[i];
+            // checking if the difference between the target value and the x exist in the hashmap as a key
+            valueInSet = target - x; 
+            
+            // if the key exist in the hashmap, and its value doesnt match with the current index, finalize the result in the 
+            // array
+            if(hashMap.containsKey(valueInSet) && (hashMap.get(valueInSet) != i)){
 
-            }
-
-            if((nums[staticIndex] + nums[i]) == target) {
-                    
-                returnArr[0] = staticIndex;
-                returnArr[1] = i;
-                break;
-
-            }
-
-            if(i == (nums.length-1)){
-
-                i=0;
-                staticIndex+=1;
-                
-                if((staticIndex == (nums.length-1)) && (i == (staticIndex - 1))){
-                 
-                    System.out.println("Static Index reached its max limit, no solution found");
-                    break;
-
-                }
-
+                result[0] = i;
+                result[1] = hashMap.get(valueInSet);
             }
 
         }
 
+        return result;
 
-        return returnArr;
+    }
+
+    // method for loading all the in values into the hashmap
+    public HashMap loader(int[] arr){
+
+        // temporary hashmap
+        HashMap<Integer, Integer> temp = new HashMap<>();
+
+        // inserting the values as the key to eliminate the duplicate values, and the index as the value
+        for(int i=0; i<arr.length; i++){
+            
+            temp.put(arr[i], i);
+            
+        }
+
+        // returning the hashmap product
+        return temp;
 
     }
 
