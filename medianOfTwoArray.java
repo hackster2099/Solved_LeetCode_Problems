@@ -1,12 +1,11 @@
 class Solution {
 
-
     int missingDataSum1;
     int missingDataSum2;
     int missingDataNum;
 
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        
+       
     }
 
     public static int sumFunc(int maxValue){
@@ -38,15 +37,51 @@ class Solution {
 
     public static int missingDataNum(int[] nums1, int[] nums2){
 
+        int difference = 0;
+        int startingValue;
+        int endingValue;
+        int numOfMissingData;
+        boolean startFlag = false;
+
+        //analyzing the first array
         for(int i=0; i<nums1.lenght; i++){
+
+            difference = nums1[i+1] - nums1[i];
+
+            if((difference > 1) && !startFlag){
+                
+                startingValue = nums1[i];
+                numOfMissingData += (difference - 1);
+                startFlag = true;
+            
+            }
+
+            if((difference > 1) && startFlag && (nums1[nums1.length - 1] != nums1[i+1])){
+
+                numOfMissingData += (difference - 1);
+            
+            }
+            
+            if((difference > 1) && startFlag && (nums1[nums1.length - 1] == nums1[i+1])){
+
+                numOfMissingData += (difference - 1);
+                endingValue = nums1[i+1];
+                startFlag = false;
+
+            }
+        }
+
+        for(int i=startingValue; i>= endingValue; i++){
 
             
 
+
+
         }
+
 
     }
 
     public static int missingSumFunc(){}
 
-
-} 
+}  
