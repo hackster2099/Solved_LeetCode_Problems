@@ -4,10 +4,15 @@ class Solution {
     public static int maxVal = 0;
     public static int missingDataNum = 0;
 
-    Hashmap <int, int> foundRanges = new Hashmap<int, int>;
+    public static HashMap<Integer, Integer> foundRanges = new HashMap();
 
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-       
+
+        double medianValue;
+
+        medianValue = (sumFunc(maxValFinder(nums1, nums2))/(maxValFinder(nums1, nums2) - missingDataNum(nums1, nums2))) - ((missingSumFunc())/(maxValFinder(nums1, nums2) - missingDataNum(nums1, nums2)));
+
+        return medianValue;
     }
 
     public static int sumFunc(int maxValue){
@@ -28,9 +33,9 @@ class Solution {
 
         int maxVal;
 
-        if(nums1[nums1.length - 1] > nums2[nums2.length - 1] ) {maxVal = nums1[nums1.length - 1]}    
-        else if( nums2[nums2.length - 1] > nums1[nums1.length - 1] ) {maxVal = nums2[nums1.length - 1]}    
-        else{maxVal = nums1[nums1.length - 1]}  
+        if(nums1[nums1.length - 1] > nums2[nums2.length - 1] ) {maxVal = nums1[nums1.length - 1];}    
+        else if( nums2[nums2.length - 1] > nums1[nums1.length - 1] ) {maxVal = nums2[nums1.length - 1];}    
+        else{maxVal = nums1[nums1.length - 1];}  
 
         return maxVal; 
 
@@ -38,17 +43,19 @@ class Solution {
     
     public static int missingDataNum(int[] nums1, int[] nums2){
 
-        int difference = 0;
+        int difference;
         boolean flag = false;
         int tempValue;
 
-        for(int i=0; i<nums1.lenght; i++){
+        for(int i=0; i<(nums1.length-1); i++){
 
             difference = nums1[i+1] - nums1[i];
 
+            // checking the first value and adding it to hash. 
+            // mininum and maxinum values are automatically set to the first value found
             if((difference > 1) && !flag){
 
-                foundRange.put(nums1[i], nums1[i+1]);
+                foundRanges.put(nums1[i], nums1[i+1]);
                 missingDataNum += (difference - 1);
                 minVal = nums1[i];
                 maxVal = nums1[i+1]; 
@@ -56,9 +63,10 @@ class Solution {
 
             }
 
+            // after that, doing the same operation, but this time, checking and changing the min and max values
             if((difference > 1) && flag){
             
-                foundRange.put(nums1[i], nums1[i+1]);
+                foundRanges.put(nums1[i], nums1[i+1]);
                 missingDataNum += (difference - 1);
                 
                 if (minVal > nums1[i]){ minVal = nums1[i];}
@@ -68,16 +76,17 @@ class Solution {
 
         }
 
-        for(int i=0; i<nums2.lenght; i++) {
+        flag = false;
+        tempValue = 0;
 
-            boolean flag = false;
-            int tempValue
+        for(int i=0; i<(nums2.length-1); i++) {
 
+            
             difference = nums2[i+1] - nums2[i];
 
             if(difference > 1) {
 
-                foundRange.put(nums2[i], nums2[i+1]);
+                foundRanges.put(nums2[i], nums2[i+1]);
                 missingDataNum += (difference - 1);
                 if (minVal > nums2[i]){ minVal = nums2[i];}
                 if (maxVal < nums2[i+1]){ maxVal = nums2[i+1];}   
@@ -86,24 +95,30 @@ class Solution {
 
         }
 
+        return missingDataNum;
+
     }
 
-    public static int missingSumFunc() {
+    public static int missingSumFunc(int ) {
 
 
         // implement the algorithm written on the notebook here.
-        
+        int missingDataSum = 0;
 
         for(int i=minVal; i<=maxVal; i++){
 
-            if(foundRanges.containsKey(i)){
+            if(foundRanges.containsKey(i) || foundRanges.containsValue(i)){} // do nothing
 
+            else{ 
+
+                    missingDataSum+=i;            
 
             }    
 
         }
 
+        return missingDataSum;
 
     }
 
-}   
+}    
