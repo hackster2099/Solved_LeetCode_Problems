@@ -1,124 +1,154 @@
+import java.Math;
+
+// rule:   Left1 <= Right2 && Left2 <= Right1
+
 class Solution {
 
-    public static int minVal = 0;
-    public static int maxVal = 0;
-    public static int missingDataNum = 0;
+    int arr1IndexL;
+    int arr1IndexR;
+    int arr2IndexL;
+    int arr2IndexR;
 
-    public static HashMap<Integer, Integer> foundRanges = new HashMap();
+    double totalArraySize; 
+    double leftPartition;
+    double rightPartition;
+    String operation1;
 
-    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+    boolean reIndexFlag = false;
 
-        double medianValue;
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
 
-        medianValue = (sumFunc(maxValFinder(nums1, nums2))/(maxValFinder(nums1, nums2) - missingDataNum(nums1, nums2))) - ((missingSumFunc())/(maxValFinder(nums1, nums2) - missingDataNum(nums1, nums2)));
+        int halfOfArray;
+        int index1;
+        int index2;
+    
 
-        return medianValue;
-    }
-
-    public static int sumFunc(int maxValue){
-
-        int sumOfAllData = 0;
-
-        for(int i=0; i <= maxValue; i++){ 
-
-            sumOfAllData += i;
+        if(nums1.length == 1 && nums2.length == 1){
+            
+            return ((nums1[0] + nums2[0]) / 2);
 
         }
 
-        return sumOfAllData;
+
+        else if(nums1.length == 1 && nums2.length > 1){
+            
+            // check if the single element inside the array is bigger than or equal to the larger array max value
+            if(nums1[0] >= nums2[nums2.length - 1]){
+
+                if(((nums1.length + nums2.length) % 2) == 0){
+
+                    index1 = (nums2.length) / 2;
+                    index1 
+
+
+                }
+
+
+            }
+            
+        
+        }
+
+        else if(nums2.length == 1 && nums1.length > 1){
+
+        
+
+        }
+
+        
+
+        else {
+
+        }
+
+
+        // use all the functions here
+    }
+
+    public static void totalSizeOfArray(int[] nums1, int[] nums2){
+
+        this.totalArraySize = nums1.length + nums2.length;
+        
+        if((this.totalArraySize % 2) == 0){
+
+            this.operation1 = "even";
+
+        }
+
+        else{
+
+            this.operation1 = "odd";
+        }
+    
+    }
+
+    public static void partition(double totalArraySize, String operation){
+
+        if (operation == "even") {
+
+            this.leftPartition = this.rightPartition = (totalArraySize / 2);
+
+        }
+
+        else if (operation == "odd") {
+
+            this.leftPartition = Math.ceil(totalArraySize / 2);
+            this.rightPartition = Math.floor(totalArraySize / 2);
+
+        }
+
+    }
+
+
+    // if you get an error, im pretty sure its happening here
+
+    public static void indexing(boolean reIndexFlag, String operation, double leftPartition, double rightPartition, int[] nums1
+                                ,int[] nums2) {
+
+
+        int arrSize1 = nums1.length;
+        int arrSize2 = nums2.length;
+
+        if(!reIndexFlag){
+
+            if(operation == "even"){
+                
+                if(arrSize1 > arrSize2){
+
+                    // ceil will take care of the even or odd size
+                    this.arr1IndexL = (int) (Math.ceil(arrSize1 / 2) - 1 );
+                    this.arr2IndexL = this.totalArraySize - this.arr1IndexL; 
+                    
+                }
+
+                else if(arrSize2 > arrSize1){
+
+                    this.arr2IndexL
+
+                }
+
+                else if(){}
+                
+
+            }            
+
+
+        }      
+
+
+        else{
+
+
+        }  
         
     }
-   
-    public static int maxValFinder(int[] nums1, int[] nums2){
 
-        int maxVal;
-
-        if(nums1[nums1.length - 1] > nums2[nums2.length - 1] ) {maxVal = nums1[nums1.length - 1];}    
-        else if( nums2[nums2.length - 1] > nums1[nums1.length - 1] ) {maxVal = nums2[nums1.length - 1];}    
-        else{maxVal = nums1[nums1.length - 1];}  
-
-        return maxVal; 
-
-    }
+    public static boolean conditionChecking(int arr1IndexL, int arr1IndexR, int arr2IndexL, int arr2IndexR){
     
-    public static int missingDataNum(int[] nums1, int[] nums2){
-
-        int difference;
-        boolean flag = false;
-        int tempValue;
-
-        for(int i=0; i<(nums1.length-1); i++){
-
-            difference = nums1[i+1] - nums1[i];
-
-            // checking the first value and adding it to hash. 
-            // mininum and maxinum values are automatically set to the first value found
-            if((difference > 1) && !flag){
-
-                foundRanges.put(nums1[i], nums1[i+1]);
-                missingDataNum += (difference - 1);
-                minVal = nums1[i];
-                maxVal = nums1[i+1]; 
-                flag = true;              
-
-            }
-
-            // after that, doing the same operation, but this time, checking and changing the min and max values
-            if((difference > 1) && flag){
-            
-                foundRanges.put(nums1[i], nums1[i+1]);
-                missingDataNum += (difference - 1);
-                
-                if (minVal > nums1[i]){ minVal = nums1[i];}
-                if (maxVal < nums1[i+1]){ maxVal = nums1[i+1];}                
-
-            }
-
-        }
-
-        flag = false;
-        tempValue = 0;
-
-        for(int i=0; i<(nums2.length-1); i++) {
-
-            
-            difference = nums2[i+1] - nums2[i];
-
-            if(difference > 1) {
-
-                foundRanges.put(nums2[i], nums2[i+1]);
-                missingDataNum += (difference - 1);
-                if (minVal > nums2[i]){ minVal = nums2[i];}
-                if (maxVal < nums2[i+1]){ maxVal = nums2[i+1];}   
-
-            }
-
-        }
-
-        return missingDataNum;
 
     }
 
-    public static int missingSumFunc(int ) {
+
+}
 
 
-        // implement the algorithm written on the notebook here.
-        int missingDataSum = 0;
-
-        for(int i=minVal; i<=maxVal; i++){
-
-            if(foundRanges.containsKey(i) || foundRanges.containsValue(i)){} // do nothing
-
-            else{ 
-
-                    missingDataSum+=i;            
-
-            }    
-
-        }
-
-        return missingDataSum;
-
-    }
-
-}    
